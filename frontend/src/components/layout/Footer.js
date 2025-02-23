@@ -1,7 +1,7 @@
 import React from 'react'
 import { whitelist } from 'validator'
 
-const footer = () => {
+const Footer = () => {
   return (
     <footer class="bg-dark text-white mt-5 p-4 text-center">
       Copyright &copy; { new Date().getFullYear()} Simple Social App
@@ -9,4 +9,4 @@ const footer = () => {
   )
 }
 
-export default footer
+export default Footer
