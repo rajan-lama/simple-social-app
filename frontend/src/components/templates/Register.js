@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import classnames from 'classnames';
 
 const Register = () =>
 {
@@ -23,8 +24,10 @@ const Register = () =>
 
     axios.post( '/api/users/register', newUser )
       .then( res => console.log( res.data ) )
-      .catch( err => console.log( err.response.data ) )
+      .catch( err => setAttribute({ errors: err.response.data }) )
   }
+
+  const { errors } = attribute;
 
   return (
     <div className="register">
@@ -35,17 +38,21 @@ const Register = () =>
             <p className="lead text-center">Create your DevConnector account</p>
             <form onSubmit={(e)=>onSubmit(e)}>
               <div className="form-group">
-                <input type="text" className="form-control form-control-lg" placeholder="Name" name="name" value={ attribute.name } onChange={(e) => onChangeValue(e) } required />
+                <input type="text" className={ classnames( "form-control form-control-lg", { 'is-invalid': errors.name } ) } placeholder="Name" name="name" value={ attribute.name } onChange={ ( e ) => onChangeValue( e ) } />
+                { errors.name && ( <div className="invalid-feedback">{ errors.name }</div>)}
               </div>
               <div className="form-group">
-                <input type="email" className="form-control form-control-lg" placeholder="Email Address" value={ attribute.email } name="email" onChange={(e) => onChangeValue(e) }/>
+                <input type="email" className={ classnames( "form-control form-control-lg", { 'is-invalid': errors.email } ) }placeholder="Email Address" value={ attribute.email } name="email" onChange={(e) => onChangeValue(e) }/>
                 <small className="form-text text-muted">This site uses Gravatar so if you want a profile image, use a Gravatar email</small>
+                { errors.email && ( <div className="invalid-feedback">{ errors.email }</div>)}
               </div>
               <div className="form-group">
-                <input type="password" className="form-control form-control-lg" placeholder="Password" value={ attribute.password } name="password" onChange={(e) => onChangeValue(e) }/>
+                <input type="password" className={ classnames( "form-control form-control-lg", { 'is-invalid': errors.password } ) } placeholder="Password" value={ attribute.password } name="password" onChange={ ( e ) => onChangeValue( e ) } />
+                { errors.password && ( <div className="invalid-feedback">{ errors.password }</div>)}
               </div>
               <div className="form-group">
-                <input type="password" className="form-control form-control-lg" placeholder="Confirm Password" name="password2" value={ attribute.password2 } onChange={(e) => onChangeValue(e) }/>
+                <input type="password" className={ classnames( "form-control form-control-lg", { 'is-invalid': errors.password2 } ) } placeholder="Confirm Password" name="password2" value={ attribute.password2 } onChange={ ( e ) => onChangeValue( e ) } />
+                { errors.password2 && ( <div className="invalid-feedback">{ errors.password2 }</div>)}
               </div>
               <input type="submit" className="btn btn-info btn-block mt-4" />
             </form>
